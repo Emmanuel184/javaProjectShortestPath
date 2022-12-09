@@ -1,3 +1,4 @@
+import java.util.Currency;
 import java.util.Iterator;
 
 public class myLinkedList<E> implements Iterable<E>{

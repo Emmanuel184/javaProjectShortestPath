@@ -76,9 +76,27 @@ public class main {
     public static void printFlights(myLinkedList<myLinkedList<city>> adjacencyGraph, String source, String dest,
             boolean sortByTime) {
 
+        myLinkedList<myLinkedList<city>> copy1 = createCopy(adjacencyGraph);
+        myLinkedList<myLinkedList<city>> copy2 = createCopy(adjacencyGraph);
+
         System.out.print("Path 1: ");
         myStack<city> backTrack = dijkstras(adjacencyGraph, source, dest, sortByTime);
-        printPathWithCosts(backTrack, adjacencyGraph, sortByTime, new city(source));
+        city nextEdgeToRemove = printPathWithCosts(backTrack, adjacencyGraph, new city(source));
+
+        System.out.println("\n---------------------------------------");
+
+        myStack<city> backTrack2 = dijkstras(copy1, source, dest, sortByTime);
+        city nextEdgeToRemove2 = printPathWithCosts(backTrack2, adjacencyGraph, new city(source));
+
+        System.out.println("\n---------------------------------------");
+
+
+        myStack<city> backTrack3 = dijkstras(copy1, source, dest, sortByTime);
+        city nextEdgeToRemove3 = printPathWithCosts(backTrack3, adjacencyGraph, new city(source));
+
+
+
+        System.out.println("\nSTOP!");
 
     }
 
@@ -130,8 +148,9 @@ public class main {
                                     + dist[adjacencyGraph.getIndex(currentCity)];
                             prevCity[adjacencyGraph.getIndex(new myLinkedList<>(i))] = currentCity.getHead().element;
                         }
-                        dijkstrasQueue.offer(new city(i.cityName, dist[adjacencyGraph.getIndex(new myLinkedList<>(i))],
-                                dist[adjacencyGraph.getIndex(new myLinkedList<>(i))]));
+                        dijkstrasQueue
+                                .offer(new city(i.getCityName(), dist[adjacencyGraph.getIndex(new myLinkedList<>(i))],
+                                        dist[adjacencyGraph.getIndex(new myLinkedList<>(i))]));
                     } else {
                         if ((i.getCost() + dist[adjacencyGraph.getIndex(currentCity)]) < dist[adjacencyGraph
                                 .getIndex(new myLinkedList<>(i))]) {
@@ -139,8 +158,9 @@ public class main {
                                     + dist[adjacencyGraph.getIndex(currentCity)];
                             prevCity[adjacencyGraph.getIndex(new myLinkedList<>(i))] = currentCity.getHead().element;
                         }
-                        dijkstrasQueue.offer(new city(i.cityName, dist[adjacencyGraph.getIndex(new myLinkedList<>(i))],
-                                dist[adjacencyGraph.getIndex(new myLinkedList<>(i))]));
+                        dijkstrasQueue
+                                .offer(new city(i.getCityName(), dist[adjacencyGraph.getIndex(new myLinkedList<>(i))],
+                                        dist[adjacencyGraph.getIndex(new myLinkedList<>(i))]));
                     }
                 }
             }
@@ -154,7 +174,7 @@ public class main {
 
         while (prevCity[adjacencyGraph.getIndex(new myLinkedList<>(currentCity))] != null) {
             currentCity = prevCity[adjacencyGraph.getIndex(new myLinkedList<>(currentCity))];
-            city nextCity = new city(currentCity.cityName);
+            city nextCity = new city(currentCity.getCityName());
             backTrackPath.push(nextCity);
         }
 
@@ -187,27 +207,30 @@ public class main {
                     adjacencyGraph.addAtTail(secondSoureCity);
                 }
 
-                adjacencyGraph.get(firstSourceCity).addAtTail(new city(flightDataParts[1],
-                        Integer.parseInt(flightDataParts[2]), Integer.parseInt(flightDataParts[3])));
+                adjacencyGraph.get(firstSourceCity)
+                        .addAtTail(new city(flightDataParts[1], firstSourceCity.getHead().element.getCityName(),
+                                Integer.parseInt(flightDataParts[2]), Integer.parseInt(flightDataParts[3])));
 
-                adjacencyGraph.get(secondSoureCity).addAtTail(new city(flightDataParts[0],
-                        Integer.parseInt(flightDataParts[2]), Integer.parseInt(flightDataParts[3])));
+                adjacencyGraph.get(secondSoureCity)
+                        .addAtTail(new city(flightDataParts[0], secondSoureCity.getHead().element.getCityName(),
+                                Integer.parseInt(flightDataParts[2]), Integer.parseInt(flightDataParts[3])));
             }
         } catch (Exception error) {
             System.out.println(error);
         }
     }
 
-    public static void printPathWithCosts(myStack<city> backTrackPath, myLinkedList<myLinkedList<city>> adjacencyGraph,
-            boolean sortByTime, city source) {
+    public static city printPathWithCosts(myStack<city> backTrackPath, myLinkedList<myLinkedList<city>> adjacencyGraph,
+            city source) {
 
         int cost = 0;
         int time = 0;
 
-        city prevCity = new city(source.cityName);
+        city prevCity = new city(source.getCityName());
+        city currentCity = null;
         while (!(backTrackPath.isEmpty())) {
 
-            city currentCity = backTrackPath.pop();
+            currentCity = adjacencyGraph.get(new myLinkedList<>(prevCity)).get(backTrackPath.pop());
             myLinkedList<city> cityLiinkedList = adjacencyGraph.get(new myLinkedList<>(prevCity));
             city i = cityLiinkedList.get(currentCity);
             if (!(backTrackPath.isEmpty())) {
@@ -215,6 +238,7 @@ public class main {
                 if (!(i.equals(source))) {
                     cost += i.getCost();
                     time += i.getTime();
+                    prevCity = currentCity;
                 }
 
             } else {
@@ -223,10 +247,35 @@ public class main {
                 time += i.getTime();
             }
 
-            prevCity = currentCity;
         }
 
         System.out.print("Time: " + time + " Cost: " + cost);
+
+        return currentCity;
+
+    }
+
+    public static myLinkedList<myLinkedList<city>> createCopy(myLinkedList<myLinkedList<city>> adjacencyGraph) {
+
+        myLinkedList<myLinkedList<city>> returnGraph = new myLinkedList<>();
+
+        for (myLinkedList<city> i : adjacencyGraph) {
+
+            returnGraph.addAtTail(new myLinkedList<>(i.getHead().element));
+
+        }
+
+        for (myLinkedList<city> i : returnGraph) {
+
+            for (city j : adjacencyGraph.get(i)) {
+                
+                if (!(i.getHead().element.equals(j))) {
+                    i.addAtTail(new city(j.getCityName(), i.getHead().element.getCityName(), j.getCost(), j.getTime()));
+                }
+            }
+        }
+
+        return returnGraph;
 
     }
 

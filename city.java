@@ -1,12 +1,12 @@
 public class city {
 
-        String cityName;
+        private String cityName;
 
-        String parentCity;
+        private String parentCity;
     
-        int costToConnectedCity;
+        private int costToConnectedCity;
     
-        int timeToConnectedCity;
+        private int timeToConnectedCity;
     
         city(String cityName) {
             this.cityName = cityName;
@@ -26,6 +26,13 @@ public class city {
     
         }
 
+        city(String cityName, String parentCityName, int cost, int time) {
+            this.cityName = cityName;
+            this.parentCity = parentCityName;
+            this.costToConnectedCity = cost;
+            this.timeToConnectedCity = time;
+        }
+
         public void changeCost(int newCost) {
             this.costToConnectedCity = newCost;
         }
@@ -40,6 +47,14 @@ public class city {
     
         public int getTime() {
             return this.timeToConnectedCity;
+        }
+        
+        public String getCityName() {
+            return this.cityName;
+        }
+
+        public String getParentCityName() {
+            return this.getParentCityName();
         }
     
         @Override
