@@ -25,6 +25,14 @@ public class city {
             this.timeToConnectedCity = time;
     
         }
+
+        public void changeCost(int newCost) {
+            this.costToConnectedCity = newCost;
+        }
+
+        public void changeTime(int newTime) {
+            this.timeToConnectedCity = newTime;
+        }
     
         public int getCost() {
             return this.costToConnectedCity;

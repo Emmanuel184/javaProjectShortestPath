@@ -9,9 +9,17 @@ public class myStack<E> {
         stack.addAtHead(element);
     }
 
+    public boolean isEmpty() {
+        return stack.getLength() == 0;
+    }
+
+    public E peek() {
+        return stack.getHead().element;
+    }
+
     public E pop(){
 
-        if (stack.length == 0) {
+        if (stack.getLength() == 0) {
             System.out.println("Stack is empty!");
             return null;
         }

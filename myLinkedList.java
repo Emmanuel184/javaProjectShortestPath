@@ -4,7 +4,7 @@ public class myLinkedList<E> implements Iterable<E>{
 
     private node<E> head;
 
-    int length;
+    private int length;
 
     public myLinkedList(E city) {
         this.head = new node<>(city);
@@ -14,6 +14,10 @@ public class myLinkedList<E> implements Iterable<E>{
     public myLinkedList() {
         this.head = null;
         this.length = 0;
+    }
+
+    public int getLength() {
+        return this.length;
     }
 
     public void addAtHead(E elemenet) {
@@ -47,7 +51,7 @@ public class myLinkedList<E> implements Iterable<E>{
 
             currentNode.next = newNode;
         }
-        
+
         this.length++;
     }
 
@@ -98,6 +102,33 @@ public class myLinkedList<E> implements Iterable<E>{
         } else {
             return false;
         }
+    }
+
+    public int getIndex(E element) {
+
+        node<E> newNode = new node<E>(element);
+        node<E> currentNode = this.head;
+
+        int returnIndex = 0;
+
+        if(this.head.element.equals(newNode.element)) {
+            return 0;
+        } else {
+
+            while(currentNode.next != null && !(currentNode.element.equals(element))) {
+                currentNode = currentNode.next;
+                returnIndex++;
+                
+            }
+
+        }
+
+        if (currentNode.element.equals(element)) {
+            return returnIndex;
+        } else {
+            return -1;
+        }
+        
     }
 
     public E get(E element) {
