@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 
 public class main {
     public static void main(String[] args) {
+        System.out.println();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -26,8 +27,6 @@ public class main {
         // }
 
         // }
-
-        System.out.println("\n------------------");
 
         String flightRequestedPath = "./flightsRequested";
 
@@ -63,7 +62,9 @@ public class main {
 
                 printFlights(adjacencyGraph, flightRequestedData[0], flightRequestedData[1], sortByTime);
 
-                System.out.println("\n\n--------------------------------------");
+                System.out.println();
+
+                flightNumber++;
 
             }
 
@@ -76,27 +77,28 @@ public class main {
     public static void printFlights(myLinkedList<myLinkedList<city>> adjacencyGraph, String source, String dest,
             boolean sortByTime) {
 
+        int pathNumber = 1;
         myLinkedList<myLinkedList<city>> copy1 = createCopy(adjacencyGraph);
         myLinkedList<myLinkedList<city>> copy2 = createCopy(adjacencyGraph);
 
-        System.out.print("Path 1: ");
         myStack<city> backTrack = dijkstras(adjacencyGraph, source, dest, sortByTime);
-        city nextEdgeToRemove = printPathWithCosts(backTrack, adjacencyGraph, new city(source));
-
-        System.out.println("\n---------------------------------------");
-
+        city nextEdgeToRemove = printPathWithCosts(backTrack, adjacencyGraph, new city(source), pathNumber);
+        pathNumber++;
+        System.out.println();
+        myLinkedList<city> firstCityListToRemove = createCopyOfCityList(
+                createCopyOfCityList(copy1.get(new myLinkedList<>(new city(nextEdgeToRemove.getParentCityName())))));
+        copy1.get(firstCityListToRemove).remove(firstCityListToRemove.getIndex(nextEdgeToRemove));
+        copy2.get(firstCityListToRemove).remove(firstCityListToRemove.getIndex(nextEdgeToRemove));
         myStack<city> backTrack2 = dijkstras(copy1, source, dest, sortByTime);
-        city nextEdgeToRemove2 = printPathWithCosts(backTrack2, adjacencyGraph, new city(source));
+        city nextEdgeToRemove2 = printPathWithCosts(backTrack2, copy1, new city(source), pathNumber);
+        pathNumber++;
+        System.out.println();
+        myLinkedList<city> secondCityToRemove = createCopyOfCityList(
+                copy2.get(new myLinkedList<>(new city(nextEdgeToRemove2.getParentCityName()))));
+        copy2.get(secondCityToRemove).remove(secondCityToRemove.getIndex(nextEdgeToRemove2));
+        myStack<city> backTrack3 = dijkstras(copy2, source, dest, sortByTime);
+        printPathWithCosts(backTrack3, copy2, new city(source), pathNumber);
 
-        System.out.println("\n---------------------------------------");
-
-
-        myStack<city> backTrack3 = dijkstras(copy1, source, dest, sortByTime);
-        city nextEdgeToRemove3 = printPathWithCosts(backTrack3, adjacencyGraph, new city(source));
-
-
-
-        System.out.println("\nSTOP!");
 
     }
 
@@ -221,35 +223,43 @@ public class main {
     }
 
     public static city printPathWithCosts(myStack<city> backTrackPath, myLinkedList<myLinkedList<city>> adjacencyGraph,
-            city source) {
+            city source, int pathNumber) {
 
         int cost = 0;
         int time = 0;
 
         city prevCity = new city(source.getCityName());
+        if (adjacencyGraph.get(new myLinkedList<>(prevCity)).get(backTrackPath.peek()) != null) {
+            System.out.print("Path " + pathNumber + ": ");
+        }
         city currentCity = null;
         while (!(backTrackPath.isEmpty())) {
 
             currentCity = adjacencyGraph.get(new myLinkedList<>(prevCity)).get(backTrackPath.pop());
             myLinkedList<city> cityLiinkedList = adjacencyGraph.get(new myLinkedList<>(prevCity));
             city i = cityLiinkedList.get(currentCity);
-            if (!(backTrackPath.isEmpty())) {
-                System.out.print(i + " -> ");
-                if (!(i.equals(source))) {
+            if (currentCity != null) {
+
+                if (!(backTrackPath.isEmpty())) {
+                    System.out.print(i + " -> ");
+                    if (!(i.equals(source))) {
+                        cost += i.getCost();
+                        time += i.getTime();
+                        prevCity = currentCity;
+                    }
+
+                } else {
+                    System.out.print(i + ". ");
                     cost += i.getCost();
                     time += i.getTime();
-                    prevCity = currentCity;
                 }
-
-            } else {
-                System.out.print(i + ". ");
-                cost += i.getCost();
-                time += i.getTime();
             }
 
         }
 
-        System.out.print("Time: " + time + " Cost: " + cost);
+        if (currentCity != null) {
+            System.out.print("Time: " + time + " Cost: " + cost);
+        }
 
         return currentCity;
 
@@ -268,7 +278,7 @@ public class main {
         for (myLinkedList<city> i : returnGraph) {
 
             for (city j : adjacencyGraph.get(i)) {
-                
+
                 if (!(i.getHead().element.equals(j))) {
                     i.addAtTail(new city(j.getCityName(), i.getHead().element.getCityName(), j.getCost(), j.getTime()));
                 }
@@ -276,6 +286,20 @@ public class main {
         }
 
         return returnGraph;
+
+    }
+
+    public static myLinkedList<city> createCopyOfCityList(myLinkedList<city> listFromOriginalGraph) {
+        myLinkedList<city> returnList = new myLinkedList<>(
+                new city(listFromOriginalGraph.getHead().element.getCityName()));
+
+        for (city i : listFromOriginalGraph) {
+            if (!(i.equals(returnList.getHead().element))) {
+                returnList.addAtTail(i);
+            }
+        }
+
+        return returnList;
 
     }
 

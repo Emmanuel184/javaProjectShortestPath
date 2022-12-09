@@ -54,7 +54,7 @@ public class city {
         }
 
         public String getParentCityName() {
-            return this.getParentCityName();
+            return this.parentCity;
         }
     
         @Override

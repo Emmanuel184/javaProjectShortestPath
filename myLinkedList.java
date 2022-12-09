@@ -61,7 +61,7 @@ public class myLinkedList<E> implements Iterable<E>{
         node<E> previosNode = null;
         node<E> currentNode = this.head;
 
-        if(index < 0 || index > this.length - 1) {
+        if(index < 0 || index > this.length) {
             System.out.println("INDEX OUT OF BOUNDS");
             return null;
         }
