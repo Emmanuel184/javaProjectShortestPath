@@ -14,7 +14,7 @@ Source|Dest|Cost|Time
 .
 .
 
-Once we have our completed graph from our data file, we will read the requested flight file. This file will contain which city we want to start with and which to end with. We then get the 3 shortest path between these two cities.
+Once we have our completed graph from our data file, we will read the requested flight file. This file will contain which city we want to start with and which to end with. We then get the 3 shortest path between these two cities. This program will work only if there is a ./flightsRequested.txt in the same directory as this program.
 
  This file should contain its data in the following format for this program to work
 
