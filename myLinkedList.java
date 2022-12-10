@@ -1,7 +1,11 @@
-import java.util.Currency;
-import java.util.Iterator;
+import java.util.Iterator; //used for implementing iterator
 
-public class myLinkedList<E> implements Iterable<E>{
+/*
+ *  My linked list class, a basic linked list, changed equal method to compare the data held at the head of two linked lists.
+ *      Besides that You can also choose to insert at head or tail of our linked list, inserting at head helps when we implement 
+ *      our stack, and inserting at tail helps when just creating a normal list and match the graph in the project doc.
+ */
+public class myLinkedList<E> implements Iterable<E> {
 
     private node<E> head;
 
@@ -9,7 +13,7 @@ public class myLinkedList<E> implements Iterable<E>{
 
     public myLinkedList(E city) {
         this.head = new node<>(city);
-        this.length = 0;
+        this.length = 1;
     }
 
     public myLinkedList() {
@@ -41,12 +45,12 @@ public class myLinkedList<E> implements Iterable<E>{
 
         node<E> newNode = new node<>(element);
 
-        if(this.head == null) {
+        if (this.head == null) {
             this.head = newNode;
         } else {
             node<E> currentNode = this.head;
-            
-            while(currentNode.next != null) {
+
+            while (currentNode.next != null) {
                 currentNode = currentNode.next;
             }
 
@@ -61,18 +65,17 @@ public class myLinkedList<E> implements Iterable<E>{
         node<E> previosNode = null;
         node<E> currentNode = this.head;
 
-        if(index < 0 || index > this.length) {
+        if (index < 0 || index > this.length) {
             System.out.println("INDEX OUT OF BOUNDS");
             return null;
         }
 
         if (index == 0) {
             this.head = currentNode.next;
-            
 
         } else {
 
-            for(int i = 0; i < index; i++) {
+            for (int i = 0; i < index; i++) {
                 previosNode = currentNode;
                 currentNode = currentNode.next;
             }
@@ -86,6 +89,8 @@ public class myLinkedList<E> implements Iterable<E>{
 
     }
 
+    // checks if element is inlist by iterating through each node, and return if
+    // found or not
     public boolean isInList(E element) {
 
         if (this.head == null) {
@@ -105,6 +110,9 @@ public class myLinkedList<E> implements Iterable<E>{
         }
     }
 
+    // passes element and getsIndex based on head = 0 index and last node is length
+    // - 1 index, helps with arrays when implementing
+    // dijkstras
     public int getIndex(E element) {
 
         node<E> newNode = new node<E>(element);
@@ -112,14 +120,14 @@ public class myLinkedList<E> implements Iterable<E>{
 
         int returnIndex = 0;
 
-        if(this.head.element.equals(newNode.element)) {
+        if (this.head.element.equals(newNode.element)) {
             return 0;
         } else {
 
-            while(currentNode.next != null && !(currentNode.element.equals(element))) {
+            while (currentNode.next != null && !(currentNode.element.equals(element))) {
                 currentNode = currentNode.next;
                 returnIndex++;
-                
+
             }
 
         }
@@ -129,7 +137,7 @@ public class myLinkedList<E> implements Iterable<E>{
         } else {
             return -1;
         }
-        
+
     }
 
     public E get(E element) {
@@ -168,6 +176,8 @@ public class myLinkedList<E> implements Iterable<E>{
         return returnString;
     }
 
+    //This helps when comparing cities, basically we compare two linked lists based on their head element, this helps becuse
+    //each linked list head is the city the linked list represents in our graph
     @Override
     public boolean equals(Object o) {
 
@@ -189,6 +199,7 @@ public class myLinkedList<E> implements Iterable<E>{
 
     }
 
+    //iterator to be able to use for each
     @Override
     public Iterator<E> iterator() {
         // TODO Auto-generated method stub
@@ -201,6 +212,7 @@ public class myLinkedList<E> implements Iterable<E>{
 
 }
 
+//node class for our linked list
 class node<E> {
 
     E element;
@@ -214,6 +226,9 @@ class node<E> {
 
 }
 
+/*
+ *  iterator for linked list, to be able to use for each...basically keep going to next node aslong as the currentNode is not null
+ */
 class linkedListIterable<E> implements Iterator<E> {
 
     node<E> currentNode;

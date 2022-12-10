@@ -1,3 +1,8 @@
+/*
+ * City object, bascically each city will have a name, cost with it, time with it, and which city its connceted to, this basically acts as edge,
+ * but also helps when implementing the adjacency list.
+ */
+
 public class city {
 
         private String cityName;
@@ -57,6 +62,7 @@ public class city {
             return this.parentCity;
         }
     
+        //we compare cities based on name
         @Override
         public boolean equals(Object o) {
             if (this == o) {
