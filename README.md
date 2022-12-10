@@ -8,7 +8,7 @@ This project involves creting a weighted graph from data that involves flights b
 
 Flight data should follow following format for program to work:<br /><br />
 
-# of flights in graph <br />
+number of flights in graph <br />
 Source|Dest|Cost|Time <br />
 . <br />
 . <br />
@@ -18,7 +18,7 @@ Once we have our completed graph from our data file, we will read the requested 
 
  This file should contain its data in the following format for this program to work <br />
 
-# of flights requested 
+number of flights requested <br />
 Source|Dest|T or Source|Dest|C (depending on if want shortest path based on cost or time, C = cost, T = Time) <br />
 . <br />
 . <br />
