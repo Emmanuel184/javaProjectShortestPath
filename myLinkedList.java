@@ -193,7 +193,8 @@ public class myLinkedList<E> implements Iterable<E> {
             return false;
         }
 
-        myLinkedList<city> cityLinkedList = (myLinkedList) o;
+        @SuppressWarnings("unchecked")
+        myLinkedList<E> cityLinkedList =  (myLinkedList<E>) o;
 
         return this.head.element.equals(cityLinkedList.head.element);
 
@@ -202,8 +203,7 @@ public class myLinkedList<E> implements Iterable<E> {
     //iterator to be able to use for each
     @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        return new linkedListIterable(this);
+        return new linkedListIterable<>(this);
     }
 
     public node<E> getHead() {

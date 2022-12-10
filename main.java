@@ -3,6 +3,9 @@ import java.util.PriorityQueue; //for dijkstras
 import java.util.Scanner; //file read
 import java.nio.file.Paths; //file read
 
+/*
+ * The Iterative backtracking is implemented in the dijkstras function...
+ */
 public class main {
     public static void main(String[] args) {
         System.out.println();
@@ -43,7 +46,7 @@ public class main {
 
         try (Scanner fileReader = new Scanner(Paths.get(filePath))) {
 
-            int numberOfFlightsRequested = Integer.parseInt(fileReader.nextLine());
+            fileReader.nextLine();
 
             while (fileReader.hasNextLine()) {
 
@@ -261,7 +264,7 @@ public class main {
 
         try (Scanner fileReader = new Scanner(Paths.get(filePath))) {
 
-            int numberOfFlights = Integer.parseInt(fileReader.nextLine());
+            fileReader.nextLine();
 
             while (fileReader.hasNextLine()) {
 
