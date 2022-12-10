@@ -32,7 +32,7 @@ public class Main {
         }
 
         // this will print the top 3 best flights, file that store request flights
-        bestFlights(adjacencyGraph, "./flightsRequested");
+        bestFlights(adjacencyGraph, "./flightsRequested.txt");
 
     }
 
