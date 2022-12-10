@@ -1,8 +1,8 @@
-javac main.java city.java myLinkedList.java myStack.java
-java main
-    |
+javac Main.java city.java myLinkedList.java myStack.java <br />
+java Main <br />
+    |   <br />
     v
-runs program fine on different machines.
+runs program fine on different machines. <br />
 
 This project involves creting a weighted graph from data that involves flights between cities, and then finding the 3 shorted path between two cities. We are creating a graph using an adjacency list that will be created using our own linked list class. this adjacency list will be a linked list of linked list, where the first linked list will have n, number of nodes where n is the total number of cities in our data and each node is another linked list. Each of these linked list will have as head the city it represents. The inner linked list represnts all the cities the parent city is connected to. This program reads the data from a ./flightData.txt file in the same directory as the main program.
 
