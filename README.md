@@ -29,3 +29,4 @@ The way we will be finding the 3 shortest path between two nodes, is by implemen
 The way I found the next shortest path was by removing the last edge, in our path and running dijkstras algorithm again, and doing this once more for our third path.
 
 Wont work if graph involves a vertex having more than 1 edge to a another vertex, because we use getIndex() method alot and if two edges are added to the graph and in some parts of our program we dont pass the actual "city" we create instances of their objects and abuse the equal method in all of our classes.
+

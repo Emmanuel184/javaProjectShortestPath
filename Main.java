@@ -52,6 +52,10 @@ public class Main {
 
                 String flightRequested = fileReader.nextLine();
 
+                if(flightRequested.equals("")) {
+                    break;
+                }
+
                 String[] flightRequestedData = flightRequested.split("\\|");
 
                 boolean sortByTime = false;
@@ -99,16 +103,10 @@ public class Main {
                                                                   // cities is not in our file or they cant be reached
             return;
         }
-        city nextEdgeToRemove = printPathWithCosts(backTrack, adjacencyGraph, new city(source), pathNumber); // print
-                                                                                                             // path and
-                                                                                                             // return
-                                                                                                             // the edge
-                                                                                                             // to be
-                                                                                                             // removed
-                                                                                                             // to get
-                                                                                                             // next
-                                                                                                             // shortest
-                                                                                                             // path
+
+        // print path and return the edge to be removed to get the next shortest path
+        city nextEdgeToRemove = printPathWithCosts(backTrack, adjacencyGraph, new city(source), pathNumber);
+
         pathNumber++;
         /*
          * Rest of code does same as the commented code above...
@@ -267,8 +265,13 @@ public class Main {
             fileReader.nextLine();
 
             while (fileReader.hasNextLine()) {
+                
 
                 String flightData = fileReader.nextLine();
+
+                if(flightData.equals("")) {
+                    break;
+                }
 
                 String[] flightDataParts = flightData.split("\\|");
 
