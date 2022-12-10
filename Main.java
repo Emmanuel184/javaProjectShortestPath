@@ -6,7 +6,7 @@ import java.nio.file.Paths; //file read
 /*
  * The Iterative backtracking is implemented in the dijkstras function...
  */
-public class main {
+public class Main {
     public static void main(String[] args) {
         System.out.println();
 
